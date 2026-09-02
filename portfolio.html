@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Yash Agola - WordPress Developer Portfolio</title>
+  
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-dark: #121212;
+      --card-bg: #201f1d;
+      --text-muted: #9e9992;
+      --text-main: #f3efe6;
+      --accent-beige: #d8d2c4;
+      --border-color: rgba(216, 210, 196, 0.28);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      color: var(--text-main);
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .deck-container {
+      width: 96vw;
+      max-width: 1440px;
+      height: 88vh;
+      max-height: 820px;
+      position: relative;
+    }
+
+    .swiper {
+      width: 100%;
+      height: 100%;
+      border-radius: 26px;
+      background-color: var(--card-bg);
+      box-shadow: 0 35px 80px rgba(0,0,0,0.65);
+    }
+
+    .swiper-slide {
+      position: relative;
+      overflow: hidden;
+      padding: 45px 65px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .meta-bar {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      letter-spacing: 0.5px;
+      z-index: 20;
+    }
+
+    .arrow-icon-btn {
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      transition: transform 0.25s ease;
+    }
+
+    .arrow-icon-btn:hover {
+      transform: translateX(6px);
+    }
+
+    .back-arrow-btn:hover {
+      transform: translateX(-6px);
+    }
+
+    /* ========================================================
+       3D TEXT + CUTOUT DEPTH EFFECT (BACKGROUND & FOREGROUND)
+       ======================================================== */
+    .depth-text-wrapper {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 100%;
+      text-align: center;
+      user-select: none;
+      pointer-events: none;
+    }
+
+    /* Layer 1: પાછળનું સોલિડ લખાણ */
+    .depth-text-bg {
+      font-family: 'Anton', sans-serif;
+      font-size: clamp(5rem, 16vw, 16rem);
+      line-height: 0.82;
+      color: var(--accent-beige);
+      text-transform: uppercase;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Layer 2: વચ્ચેનો ટ્રાન્સપરન્ટ PNG કટઆઉટ ફોટો */
+    .depth-cutout {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      height: 88%;
+      z-index: 5;
+      pointer-events: none;
+    }
+
+    .depth-cutout img {
+      height: 100%;
+      width: auto;
+      object-fit: contain;
+      filter: drop-shadow(0 20px 30px rgba(0,0,0,0.7));
+    }
+
+    /* Layer 3: આગળનું Outline / Stoked લખાણ (જે ફોટાની ઉપર દેખાશે) */
+    .depth-text-fg {
+      font-family: 'Anton', sans-serif;
+      font-size: clamp(5rem, 16vw, 16rem);
+      line-height: 0.82;
+      text-transform: uppercase;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 100%;
+      text-align: center;
+      color: transparent;
+      -webkit-text-stroke: 1.5px var(--accent-beige);
+      z-index: 8;
+      pointer-events: none;
+    }
+
+    /* General Typography */
+    .section-title {
+      font-family: 'Anton', sans-serif;
+      font-size: clamp(3.5rem, 9vw, 8.5rem);
+      line-height: 0.88;
+      letter-spacing: 1px;
+      color: var(--accent-beige);
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+
+    .lead-text {
+      color: var(--text-muted);
+      font-size: 1.15rem;
+      line-height: 1.7;
+      max-width: 820px;
+      margin: 0 auto;
+    }
+
+    /* Table of contents pills */
+    .toc-pill {
+      border: 1.5px solid var(--border-color);
+      border-radius: 50px;
+      padding: 12px 28px;
+      font-size: 0.95rem;
+      letter-spacing: 1.5px;
+      font-weight: 500;
+      color: var(--text-main);
+      text-transform: uppercase;
+      background: transparent;
+      cursor: pointer;
+      display: inline-block;
+      width: 100%;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .toc-pill:hover {
+      background: rgba(216, 210, 196, 0.12);
+      border-color: var(--accent-beige);
+      color: #fff;
+      transform: translateY(-2px);
+    }
+
+    .intro-banner {
+      width: 100%;
+      max-width: 820px;
+      height: 220px;
+      border-radius: 6px;
+      object-fit: cover;
+      margin: 0 auto;
+      display: block;
+    }
+
+    .skill-card-img {
+      width: 100%;
+      height: 170px;
+      object-fit: cover;
+      border-radius: 4px;
+      margin-bottom: 14px;
+    }
+
+    .card-heading {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 8px;
+    }
+
+    .card-desc {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    .year-label {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--accent-beige);
+      margin-bottom: 4px;
+    }
+
+    /* Bottom External Controls */
+    .deck-bottom-bar {
+      position: absolute;
+      bottom: -65px;
+      left: 0;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 10px;
+    }
+
+    .page-indicator {
+      font-size: 1rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .slider-nav-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.25);
+      background: transparent;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .slider-nav-btn:hover {
+      background: #fff;
+      color: #000;
+    }
+
+    @media (max-width: 992px) {
+      .swiper-slide { padding: 35px 25px; }
+      .depth-text-bg, .depth-text-fg { font-size: 18vw; }
+      .section-title { font-size: 12vw; }
+      .intro-banner { height: 160px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="deck-container">
+    <div class="swiper myPortfolioSwiper">
+      <div class="swiper-wrapper">
+        
+        <div class="swiper-slide">
+          <div class="meta-bar d-flex justify-content-between align-items-center">
+            <span class="anim-target">Creative Presentation</span>
+            <span class="arrow-icon-btn anim-target next-trigger">
+              <svg width="45" height="14" viewBox="0 0 52 14" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M0 7H48M48 7L42 1M48 7L42 13"/>
+              </svg>
+            </span>
+          </div>
+
+          <div class="depth-text-wrapper">
+            <div class="depth-text-bg title-anim">PORTFOLIO</div>
+          </div>
+
+          <div class="depth-cutout cutout-anim">
+            <img src="/yash-agola/banner-img.png" alt="Yash Agola" style="border-radius: 58% 42% 48% 52% / 25% 47% 53% 75% ;">
+          </div>
+
+          <div class="depth-text-fg outline-anim">PORTFOLIO</div>
+
+          <div class="meta-bar d-flex justify-content-between align-items-center">
+            <span class="anim-target">Yash Agola</span>
+            <span class="anim-target">WordPress Developer</span>
+          </div>
+        </div>
+
+        <div class="swiper-slide">
+          <div class="meta-bar d-flex justify-content-between align-items-center">
+            <span class="anim-target">Creative Presentation</span>
+            <span class="arrow-icon-btn anim-target next-trigger">
+              <svg width="45" height="14" viewBox="0 0 52 14" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M0 7H48M48 7L42 1M48 7L42 13"/>
+              </svg>
+            </span>
+          </div>
+
+          <div class="container my-auto" style="z-index: 10;">
+            <div class="row">
+              <div class="col-lg-8">
+                <h2 class="section-title title-anim mb-4">TABLE OF CONTENTS</h2>
+                
+                <div class="row g-3">
+                  <div class="col-md-4 col-sm-6"><button class="toc-pill jump-slide" data-slide="2">Introduction</button></div>
+                  <div class="col-md-4 col-sm-6"><button class="toc-pill jump-slide" data-slide="2">About Me</button></div>
+                  <div class="col-md-4 col-sm-6"><button class="toc-pill jump-slide" data-slide="3">Personal Skills</button></div>
+                  <div class="col-md-4 col-sm-6"><button class="toc-pill jump-slide" data-slide="4">Experience</button></div>
+                  <div class="col-md-4 col-sm-6"><button class="toc-pill jump-slide" data-slide="5">Project Portfolio</button></div>
+                  <div class="col-md-4 col-sm-6"><button class="toc-pill jump-slide" data-slide="5">Live Projects</button></div>
+                  <div class="col-md-4 col-sm-6"><button class="toc-pill jump-slide" data-slide="6">Contact</button></div>
+                  <div class="col-md-4 col-sm-6"><button class="toc-pill jump-slide" data-slide="6">Thank You</button></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="depth-cutout cutout-anim" style="right: 5%; left: auto; transform: none; height: 90%;">
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=900&q=80" alt="Portrait">
+          </div>
+
+          <div class="meta-bar d-flex justify-content-between align-items-center">
+            <span class="anim-target">Yash Agola</span>
+            <span class="anim-target">Index Overview</span>
+          </div>
+        </div>
+
+        <div class="swiper-slide text-center">
+          <div class="meta-bar d-flex justify-content-between align-items-center">
+            <span class="anim-target">Creative Presentation</span>
+            <span class="arrow-icon-btn anim-target next-trigger">
+              <svg width="45" height="14" viewBox="0 0 52 14" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M0 7H48M48 7L42 1M48 7L42 13"/>
+              </svg>
+            </span>
+          </div>
+
+          <div class="my-auto position-relative" style="z-index: 10;">
+            <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1200&q=80" alt="Code Workspace" class="intro-banner mb-3 anim-target">
+            <h2 class="section-title title-anim mb-3">INTRODUCTION</h2>
+            <p class="lead-text anim-target">
+              I am a results-oriented WordPress Developer with over 4 years of hands-on experience designing, developing, and optimizing high-performance client websites. Skilled in WooCommerce, Elementor Pro, theme customization, and turning pixel-perfect Figma designs into responsive code.
+            </p>
+          </div>
+
+          <div class="meta-bar d-flex justify-content-between align-items-center">
+            <span class="anim-target">Yash Agola</span>
+            <span class="anim-target">Portfolio Profile</span>
+          </div>
+        </div>
+
+        <div class="swiper-slide">
+          <div class="meta-bar d-flex justify-content-between align-items-center">
+            <span class="anim-target">Creative Presentation</span>
+            <span class="arrow-icon-btn anim-target next-trigger">
+              <svg width="45" height="14" viewBox="0 0 52 14" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M0 7H48M48 7L42 1M48 7L42 13"/>
+              </svg>
+            </span>
+          </div>
+
+          <div class="my-auto text-center" style="z-index: 10;">
+            <h2 class="section-title title-anim mb-4">PERSONAL SKILLS</h2>
+            <div class="container text-start">
+              <div class="row justify-content-center g-5">
+                <div class="col-md-5 anim-target">
+                  <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=800&q=80" alt="WordPress Development" class="skill-card-img">
+                  <div class="card-heading">WordPress & Elementor Pro</div>
+                  <div class="card-desc">Advanced custom theme customization, Elementor Pro builds, ACF integration, PSD/Figma-to-WordPress conversions, and Core Web Vitals optimization.</div>
+                </div>
+                <div class="col-md-5 anim-target">
+                  <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80" alt="WooCommerce & Tech" class="skill-card-img">
+                  <div class="card-heading">WooCommerce & Web Tech</div>
+                  <div class="card-desc">End-to-end e-commerce configurations, payment gateway setups, PHP, HTML5, CSS3, JavaScript, site security, and speed performance tuning.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="meta-bar d-flex justify-content-between align-items-center">
+            <span class="anim-target">Yash Agola</span>
+            <span class="anim-target">Technical Expertise</span>
+          </div>
+        </div>
+
+        <div class="swiper-slide">
+          <div class="meta-bar d-flex justify-content-between align-items-center">
+            <span class="anim-target">Creative Presentation</span>
+            <span class="arrow-icon-btn anim-target next-trigger">
+              <svg width="45" height="14" viewBox="0 0 52 14" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M0 7H48M48 7L42 1M48 7L42 13"/>
+              </svg>
+            </span>
+          </div>
+
+          <div class="my-auto" style="z-index: 10;">
+            <div class="row align-items-center mb-4">
+              <div class="col-lg-6">
+                <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=900&q=80" alt="Agency Work" class="w-100 rounded-2 anim-target" style="height: 220px; object-fit: cover;">
+              </div>
+              <div class="col-lg-6 text-lg-end text-start">
+                <h2 class="section-title title-anim mb-0">WORK<br>EXPERIENCE</h2>
+              </div>
+            </div>
+
+            <div class="row g-4">
+              <div class="col-md-4 anim-target">
+                <div class="year-label">2024 – Present</div>
+                <div class="card-heading">Rewa Techno</div>
+                <div class="card-desc">WordPress Developer handling portfolio of 15+ live client sites, custom theme builds, speed enhancement, and full maintenance.</div>
+              </div>
+              <div class="col-md-4 anim-target">
+                <div class="year-label">2022 – 2024</div>
+                <div class="card-heading">DM Websoft LLP</div>
+                <div class="card-desc">WordPress Developer specializing in Elementor Pro, WooCommerce solutions, Figma/PSD to responsive HTML/WordPress conversions.</div>
+              </div>
+              <div class="col-md-4 anim-target">
+                <div class="year-label">4+ Years</div>
+                <div class="card-heading">Freelance & Client Works</div>
+                <div class="card-desc">Built custom responsive storefronts, payment integrations, speed optimizations, and UI/UX implementations.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="meta-bar d-flex justify-content-between align-items-center">
+            <span class="anim-target">Yash Agola</span>
+            <span class="anim-target">Career Milestones</span>
+          </div>
+        </div>
+
+        <div class="swiper-slide">
+          <div class="meta-bar d-flex justify-content-between align-items-center">
+            <span class="anim-target">Creative Presentation</span>
+            <span class="arrow-icon-btn anim-target next-trigger">
+              <svg width="45" height="14" viewBox="0 0 52 14" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M0 7H48M48 7L42 1M48 7L42 13"/>
+              </svg>
+            </span>
+          </div>
+
+          <div class="container my-auto" style="z-index: 10;">
+            <div class="row align-items-center">
+              <div class="col-lg-6">
+                <h2 class="section-title title-anim mb-3">PROJECT<br>PORTFOLIO</h2>
+                <p class="card-desc fs-5 mb-4 anim-target">
+                  A showcase of production-ready, client-driven websites developed with clean code, fast loading speeds, and responsive layouts:
+                </p>
+                <ul class="list-unstyled d-flex flex-column gap-2 anim-target">
+                  <li class="d-flex align-items-center gap-2">
+                    <span class="text-white fw-bold">01. business-plans.com</span> — Dynamic layout & custom styles
+                  </li>
+                  <li class="d-flex align-items-center gap-2">
+                    <span class="text-white fw-bold">02. nlsbanking.com</span> — Financial corporate web interface
+                  </li>
+                  <li class="d-flex align-items-center gap-2">
+                    <span class="text-white fw-bold">03. proai.co</span> — High-converting AI tech landing page
+                  </li>
+                </ul>
+              </div>
+              <div class="col-lg-6 text-center anim-target">
+                <img src="https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=800&q=80" alt="Web Projects" class="img-fluid rounded-3 shadow-lg" style="max-height: 380px; object-fit: cover;">
+              </div>
+            </div>
+          </div>
+
+          <div class="meta-bar d-flex justify-content-between align-items-center">
+            <span class="anim-target">Yash Agola</span>
+            <span class="anim-target">Selected Projects</span>
+          </div>
+        </div>
+
+        <div class="swiper-slide">
+          <div class="meta-bar d-flex justify-content-between align-items-center">
+            <span class="anim-target">Creative Presentation</span>
+            <span class="arrow-icon-btn anim-target prev-trigger back-arrow-btn">
+              <svg width="45" height="14" viewBox="0 0 52 14" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M52 7H4M4 7L10 1M4 7L10 13"/>
+              </svg>
+            </span>
+          </div>
+
+          <div class="depth-text-wrapper">
+            <div class="depth-text-bg title-anim">THANK YOU</div>
+          </div>
+
+          <div class="depth-cutout cutout-anim">
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=900&q=80" alt="Thank You">
+          </div>
+
+          <div class="depth-text-fg outline-anim">THANK YOU</div>
+
+          <div class="meta-bar d-flex justify-content-between align-items-center">
+            <span class="anim-target">Yash Agola</span>
+            <span class="anim-target">Available for WordPress Roles</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="deck-bottom-bar">
+      <div class="page-indicator"><span id="activePage">1</span> / <span id="totalPage">7</span></div>
+      <div class="d-flex gap-2">
+        <button class="slider-nav-btn prev-trigger" title="Previous Slide">&#8592;</button>
+        <button class="slider-nav-btn next-trigger" title="Next Slide">&#8594;</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+
+  <script>
+    $(document).ready(function () {
+      const portfolioSwiper = new Swiper('.myPortfolioSwiper', {
+        direction: 'horizontal',
+        speed: 800,
+        grabCursor: true,
+        keyboard: { enabled: true },
+        mousewheel: { sensitivity: 1 },
+        on: {
+          init: function () {
+            $('#totalPage').text(this.slides.length);
+            triggerSlideGSAP(this.slides[0]);
+          },
+          slideChange: function () {
+            $('#activePage').text(this.activeIndex + 1);
+            triggerSlideGSAP(this.slides[this.activeIndex]);
+          }
+        }
+      });
+
+      $('.next-trigger').on('click', function () {
+        portfolioSwiper.slideNext();
+      });
+
+      $('.prev-trigger').on('click', function () {
+        portfolioSwiper.slidePrev();
+      });
+
+      $('.jump-slide').on('click', function () {
+        const targetIndex = parseInt($(this).data('slide'), 10);
+        portfolioSwiper.slideTo(targetIndex);
+      });
+
+      function triggerSlideGSAP(slideEl) {
+        const $slide = $(slideEl);
+
+        // Solid Background Text
+        const $title = $slide.find('.title-anim');
+        if ($title.length) {
+          gsap.fromTo($title, 
+            { opacity: 0, scale: 0.92, y: 35 }, 
+            { opacity: 1, scale: 1, y: 0, duration: 1.0, ease: 'power3.out' }
+          );
+        }
+
+        // Foreground Outline Text
+        const $outline = $slide.find('.outline-anim');
+        if ($outline.length) {
+          gsap.fromTo($outline, 
+            { opacity: 0, scale: 0.92, y: 35 }, 
+            { opacity: 1, scale: 1, y: 0, duration: 1.0, ease: 'power3.out' }
+          );
+        }
+
+        // Center Cutout Subject
+        const $cutout = $slide.find('.cutout-anim img');
+        if ($cutout.length) {
+          gsap.fromTo($cutout, 
+            { opacity: 0, y: 70 }, 
+            { opacity: 1, y: 0, duration: 1.1, delay: 0.15, ease: 'power3.out' }
+          );
+        }
+
+        // Stagger other text/buttons
+        const $animTargets = $slide.find('.anim-target');
+        if ($animTargets.length) {
+          gsap.fromTo($animTargets, 
+            { opacity: 0, y: 18 }, 
+            { opacity: 1, y: 0, duration: 0.65, stagger: 0.07, ease: 'power2.out' }
+          );
+        }
+      }
+    });
+  </script>
+</body>
+</html>
