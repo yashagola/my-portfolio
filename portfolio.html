@@ -6,7 +6,6 @@
   <title>Yash Agola - WordPress Developer Portfolio</title>
   
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -87,9 +86,6 @@
       transform: translateX(-6px);
     }
 
-    /* ========================================================
-       3D TEXT + CUTOUT DEPTH EFFECT (BACKGROUND & FOREGROUND)
-       ======================================================== */
     .depth-text-wrapper {
       position: absolute;
       top: 50%;
@@ -101,7 +97,6 @@
       pointer-events: none;
     }
 
-    /* Layer 1: પાછળનું સોલિડ લખાણ */
     .depth-text-bg {
       font-family: 'Anton', sans-serif;
       font-size: clamp(5rem, 16vw, 16rem);
@@ -112,7 +107,6 @@
       z-index: 2;
     }
 
-    /* Layer 2: વચ્ચેનો ટ્રાન્સપરન્ટ PNG કટઆઉટ ફોટો */
     .depth-cutout {
       position: absolute;
       bottom: 0;
@@ -130,7 +124,6 @@
       filter: drop-shadow(0 20px 30px rgba(0,0,0,0.7));
     }
 
-    /* Layer 3: આગળનું Outline / Stoked લખાણ (જે ફોટાની ઉપર દેખાશે) */
     .depth-text-fg {
       font-family: 'Anton', sans-serif;
       font-size: clamp(5rem, 16vw, 16rem);
@@ -148,10 +141,9 @@
       pointer-events: none;
     }
 
-    /* General Typography */
     .section-title {
       font-family: 'Anton', sans-serif;
-      font-size: clamp(3.5rem, 9vw, 8.5rem);
+      font-size: clamp(3.2rem, 8vw, 7.5rem);
       line-height: 0.88;
       letter-spacing: 1px;
       color: var(--accent-beige);
@@ -167,7 +159,6 @@
       margin: 0 auto;
     }
 
-    /* Table of contents pills */
     .toc-pill {
       border: 1.5px solid var(--border-color);
       border-radius: 50px;
@@ -230,7 +221,52 @@
       margin-bottom: 4px;
     }
 
-    /* Bottom External Controls */
+    .contact-input {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1.5px solid var(--border-color);
+      border-radius: 12px;
+      color: var(--text-main);
+      padding: 12px 18px;
+      font-size: 0.95rem;
+      transition: all 0.3s ease;
+      width: 100%;
+    }
+
+    .contact-input:focus {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: var(--accent-beige);
+      color: #fff;
+      outline: none;
+    }
+
+    .contact-input::placeholder {
+      color: #7a7670;
+    }
+
+    .btn-submit-form {
+      background: var(--accent-beige);
+      color: #121212;
+      font-weight: 700;
+      letter-spacing: 1px;
+      border-radius: 40px;
+      padding: 12px 35px;
+      border: none;
+      text-transform: uppercase;
+      transition: all 0.3s ease;
+    }
+
+    .btn-submit-form:hover {
+      background: #fff;
+      transform: translateY(-2px);
+    }
+
+    .form-status {
+      display: none;
+      font-size: 0.95rem;
+      font-weight: 500;
+      margin-top: 12px;
+    }
+
     .deck-bottom-bar {
       position: absolute;
       bottom: -65px;
@@ -330,7 +366,7 @@
                   <div class="col-md-4 col-sm-6"><button class="toc-pill jump-slide" data-slide="5">Project Portfolio</button></div>
                   <div class="col-md-4 col-sm-6"><button class="toc-pill jump-slide" data-slide="5">Live Projects</button></div>
                   <div class="col-md-4 col-sm-6"><button class="toc-pill jump-slide" data-slide="6">Contact</button></div>
-                  <div class="col-md-4 col-sm-6"><button class="toc-pill jump-slide" data-slide="6">Thank You</button></div>
+                  <div class="col-md-4 col-sm-6"><button class="toc-pill jump-slide" data-slide="7">Thank You</button></div>
                 </div>
               </div>
             </div>
@@ -493,6 +529,65 @@
         <div class="swiper-slide">
           <div class="meta-bar d-flex justify-content-between align-items-center">
             <span class="anim-target">Creative Presentation</span>
+            <span class="arrow-icon-btn anim-target next-trigger">
+              <svg width="45" height="14" viewBox="0 0 52 14" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M0 7H48M48 7L42 1M48 7L42 13"/>
+              </svg>
+            </span>
+          </div>
+
+          <div class="container my-auto" style="z-index: 10;">
+            <div class="row align-items-center g-5">
+              <div class="col-lg-5">
+                <h2 class="section-title title-anim mb-3">GET IN<br>TOUCH</h2>
+                <p class="card-desc mb-4 anim-target">
+                  Have a WordPress project, need custom theme integration, or looking for a dedicated developer? Send a message and I'll get back to you promptly.
+                </p>
+                <div class="anim-target mb-3">
+                  <span class="text-white fw-bold d-block">Direct Email:</span>
+                  <a href="mailto:yashagola1234@gmail.com" class="text-decoration-none" style="color: var(--accent-beige);">yashagola1234@gmail.com</a>
+                </div>
+                <div class="anim-target">
+                  <span class="text-white fw-bold d-block">Location:</span>
+                  <span style="color: var(--text-muted);">Gujarat, India</span>
+                </div>
+              </div>
+
+              <div class="col-lg-7">
+                <!-- FIXED CONTACT FORM - WORKS LOCALLY -->
+                <form id="portfolioContactForm" class="row g-3">
+                  <div class="col-md-6 anim-target">
+                    <input type="text" name="name" class="contact-input" placeholder="Your Name" required>
+                  </div>
+                  <div class="col-md-6 anim-target">
+                    <input type="email" name="email" class="contact-input" placeholder="Your Email Address" required>
+                  </div>
+                  <div class="col-12 anim-target">
+                    <input type="text" name="subject" class="contact-input" placeholder="Project Subject / Scope">
+                  </div>
+                  <div class="col-12 anim-target">
+                    <textarea name="message" rows="4" class="contact-input" placeholder="Your Message or Project Details..." required></textarea>
+                  </div>
+                  <div class="col-12 anim-target">
+                    <button type="submit" id="submitBtn" class="btn-submit-form">Send Message</button>
+                    <div id="formSuccess" class="form-status text-success">✓ Message sent successfully! (Local simulation)</div>
+                    <div id="formError" class="form-status text-danger">✗ Please fix the errors above.</div>
+                  </div>
+                </form>
+                <!-- END FIXED CONTACT FORM -->
+              </div>
+            </div>
+          </div>
+
+          <div class="meta-bar d-flex justify-content-between align-items-center">
+            <span class="anim-target">Yash Agola</span>
+            <span class="anim-target">Contact & Inquiries</span>
+          </div>
+        </div>
+
+        <div class="swiper-slide">
+          <div class="meta-bar d-flex justify-content-between align-items-center">
+            <span class="anim-target">Creative Presentation</span>
             <span class="arrow-icon-btn anim-target prev-trigger back-arrow-btn">
               <svg width="45" height="14" viewBox="0 0 52 14" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M52 7H4M4 7L10 1M4 7L10 13"/>
@@ -520,7 +615,7 @@
     </div>
 
     <div class="deck-bottom-bar">
-      <div class="page-indicator"><span id="activePage">1</span> / <span id="totalPage">7</span></div>
+      <div class="page-indicator"><span id="activePage">1</span> / <span id="totalPage">8</span></div>
       <div class="d-flex gap-2">
         <button class="slider-nav-btn prev-trigger" title="Previous Slide">&#8592;</button>
         <button class="slider-nav-btn next-trigger" title="Next Slide">&#8594;</button>
@@ -566,10 +661,83 @@
         portfolioSwiper.slideTo(targetIndex);
       });
 
+      // ============================================================
+      //  FIXED CONTACT FORM - COMPLETE LOCAL SUBMISSION (NO EMAIL)
+      //  - Validates fields locally
+      //  - Shows success/error messages
+      //  - Logs data to console for debugging
+      //  - Does NOT send emails (works offline)
+      // ============================================================
+      $('#portfolioContactForm').on('submit', function (e) {
+        e.preventDefault();
+
+        const $form = $(this);
+        const $btn = $('#submitBtn');
+        const originalText = $btn.text();
+
+        // Hide previous status messages
+        $('#formSuccess, #formError').hide();
+
+        // Get form values
+        const name = $form.find('input[name="name"]').val().trim();
+        const email = $form.find('input[name="email"]').val().trim();
+        const subject = $form.find('input[name="subject"]').val().trim();
+        const message = $form.find('textarea[name="message"]').val().trim();
+
+        // --- Validation ---
+        let hasError = false;
+
+        if (!name) {
+          $('#formError').text('Please enter your name.').fadeIn();
+          hasError = true;
+        } else if (!email) {
+          $('#formError').text('Please enter your email address.').fadeIn();
+          hasError = true;
+        } else if (!email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+          $('#formError').text('Please enter a valid email address.').fadeIn();
+          hasError = true;
+        } else if (!message) {
+          $('#formError').text('Please enter your message.').fadeIn();
+          hasError = true;
+        }
+
+        if (hasError) {
+          return;
+        }
+
+        // --- Simulate successful local submission ---
+        $btn.text('Sending...').prop('disabled', true);
+
+        // Simulate a short delay (like an AJAX request)
+        setTimeout(function () {
+          // Show success message
+          $('#formSuccess').fadeIn();
+
+          // Reset form
+          $form[0].reset();
+
+          // Restore button
+          $btn.text(originalText).prop('disabled', false);
+
+          // Log the data to console (so you can see it)
+          console.log('📩 Local Form Submission (simulated):');
+          console.log('   Name:    ' + name);
+          console.log('   Email:   ' + email);
+          console.log('   Subject: ' + (subject || '(not provided)'));
+          console.log('   Message: ' + message);
+          console.log('✅ Message was "sent" locally (no actual email was sent).');
+
+          // Auto-hide success after 5 seconds
+          setTimeout(function () {
+            $('#formSuccess').fadeOut();
+          }, 5000);
+        }, 600);
+      });
+      // ============================================================
+
       function triggerSlideGSAP(slideEl) {
         const $slide = $(slideEl);
 
-        // Solid Background Text
         const $title = $slide.find('.title-anim');
         if ($title.length) {
           gsap.fromTo($title, 
@@ -578,7 +746,6 @@
           );
         }
 
-        // Foreground Outline Text
         const $outline = $slide.find('.outline-anim');
         if ($outline.length) {
           gsap.fromTo($outline, 
@@ -587,7 +754,6 @@
           );
         }
 
-        // Center Cutout Subject
         const $cutout = $slide.find('.cutout-anim img');
         if ($cutout.length) {
           gsap.fromTo($cutout, 
@@ -596,7 +762,6 @@
           );
         }
 
-        // Stagger other text/buttons
         const $animTargets = $slide.find('.anim-target');
         if ($animTargets.length) {
           gsap.fromTo($animTargets, 
